@@ -42,8 +42,9 @@ class _SubtitlesPageState extends State<SubtitlesPage> {
       BetterPlayerDataSourceType.network,
       Constants.forBiggerBlazesUrl,
       subtitles: BetterPlayerSubtitlesSource.single(
-        type: BetterPlayerSubtitlesSourceType.file,
-        url: await Utils.getFileUrl(Constants.fileExampleSubtitlesUrl),
+        type: BetterPlayerSubtitlesSourceType.network,
+        url:"https://pastebin.com/raw/W5rF45tN",
+        //await Utils.getFileUrl(Constants.fileExampleSubtitlesUrl),
         name: "My subtitles",
         selectedByDefault: true,
       ),

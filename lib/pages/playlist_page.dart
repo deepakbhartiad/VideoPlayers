@@ -11,8 +11,7 @@ class PlaylistPage extends StatefulWidget {
 }
 
 class _PlaylistPageState extends State<PlaylistPage> {
-  final GlobalKey<BetterPlayerPlaylistState> _betterPlayerPlaylistStateKey =
-      GlobalKey();
+  final GlobalKey<BetterPlayerPlaylistState> _betterPlayerPlaylistStateKey = GlobalKey();
   List<BetterPlayerDataSource> _dataSourceList = [];
   late BetterPlayerConfiguration _betterPlayerConfiguration;
   late BetterPlayerPlaylistConfiguration _betterPlayerPlaylistConfiguration;
