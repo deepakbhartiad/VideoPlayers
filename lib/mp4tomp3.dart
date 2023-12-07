@@ -62,35 +62,6 @@ class _DOWNLOADPageState extends State<DOWNLOADPage> {
 
   String Mp3ConvertPath ='';
 
-  ConverterAudioFile() async {
-    try {
-      final storageDir = await getExternalStorageDirectory();
-      final directoryPath = '${storageDir?.path}/MyAudioFilesConverter';
-
-      final directory = Directory(directoryPath);
-      if (!directory.existsSync()) {
-        directory.createSync(recursive: true);
-      }
-
-      final convertAudioFile =
-      File('$directoryPath/audio_${DateTime.now().millisecondsSinceEpoch}.mp3');
-
-      final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
-
-      final arguments = ['-i', SaveMp4Path, '-q:a', '0', '-map', 'a', convertAudioFile.path];
-
-      await _flutterFFmpeg.executeWithArguments(arguments);
-
-      setState(() {
-        Mp3ConvertPath = convertAudioFile.path;
-      });
-
-      print("Converted file path: ${convertAudioFile.path}");
-    } catch (e) {
-      print("Error: $e");
-    }
-  }
-
 
   Future<void> converterAudioFile() async {
     final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
@@ -105,15 +76,12 @@ class _DOWNLOADPageState extends State<DOWNLOADPage> {
       }
 
       final convertAudioFile =
-      File('$directoryPath/audio_${DateTime.now().millisecondsSinceEpoch}.aac');
-      var ddfhfh = '';
-
-      var argsuments = ["-i", SaveMp4Path, "-c:v", "mp3", convertAudioFile.path,];
+      File('$directoryPath/audio_${DateTime.now().millisecondsSinceEpoch}.mp3');
       final arguments = [
         '-i',
         SaveMp4Path,
         '-c:a',
-        'aac ', // Specify the AAC encoder
+        'libmp3lame',  //change Specify encoder the like this AAC ,and impliment this encoder to change build.gradel folder
         '-b:a',
         '192k', // Adjust the audio bitrate as needed
         convertAudioFile.path,
