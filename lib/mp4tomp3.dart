@@ -1,7 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter/return_code.dart';
+import 'package:ffmpeg_kit_flutter/session.dart';
+import 'package:ffmpeg_kit_flutter/statistics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
@@ -63,9 +66,9 @@ class _DOWNLOADPageState extends State<DOWNLOADPage> {
   String Mp3ConvertPath ='';
 
 
+/*
   Future<void> converterAudioFile() async {
     final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
-
     try {
       final storageDir = await getExternalStorageDirectory();
       final directoryPath = '${storageDir?.path}/MyAudioFilesConverter';
@@ -74,7 +77,6 @@ class _DOWNLOADPageState extends State<DOWNLOADPage> {
       if (!directory.existsSync()) {
         directory.createSync(recursive: true);
       }
-
       final convertAudioFile =
       File('$directoryPath/audio_${DateTime.now().millisecondsSinceEpoch}.mp3');
       final arguments = [
@@ -92,7 +94,75 @@ class _DOWNLOADPageState extends State<DOWNLOADPage> {
       setState(() {
         Mp3ConvertPath = convertAudioFile.path;
       });
+      print("Converted file path: ${convertAudioFile.path}");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+*/
 
+
+  Future<void> converterAudioFile() async {
+    try {
+      final storageDir = await getExternalStorageDirectory();
+      final directoryPath = '${storageDir?.path}/MyAudioFilesConverter';
+
+      final directory = Directory(directoryPath);
+      if (!directory.existsSync()) {
+        directory.createSync(recursive: true);
+      }
+
+      final convertAudioFile =
+      File('$directoryPath/audio_${DateTime.now().millisecondsSinceEpoch}.mp3');
+      final arguments = [
+        '-i',
+        SaveMp4Path,
+        '-c:a',
+        'libmp3lame',
+        '-b:a',
+        '192k',
+        convertAudioFile.path,
+      ];
+
+      final executeCallback = (session) {
+        print("FFmpeg process started");
+        session.getOutput().then((output) => print("FFmpeg process output: $output"));
+        session.getError().then((error) => print("FFmpeg process error: $error"));
+      };
+      final result = await FFmpegKit.executeWithArgumentsAsync(arguments, executeCallback);
+      if (result != null && result == ReturnCode.success) {
+        setState(() {
+          Mp3ConvertPath = convertAudioFile.path;
+        });
+        print("Converted file path: ${convertAudioFile.path}");
+      } else {
+        print("FFmpeg execution failed");
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
+  ConverterAudioFile() async {
+    try {
+      final storageDir = await getExternalStorageDirectory();
+      final directoryPath = '${storageDir?.path}/MyAudioFilesConverter';
+      final directory = Directory(directoryPath);
+      if (!directory.existsSync()) {
+        directory.createSync(recursive: true);
+      }
+      final convertAudioFile =
+      File('$directoryPath/audio_${DateTime.now().millisecondsSinceEpoch}.mp3');
+      final arguments = ['-i', SaveMp4Path, '-c:a', 'libmp3lame', '-b:a', '192k', convertAudioFile.path,];
+      executeCallback(session) {
+        print("FFmpeg process started");
+        session.getOutput().then((output) => print("FFmpeg process output: $output"));
+        session.getError().then((error) => print("FFmpeg process error: $error"));
+      }
+      await FFmpegKit.executeWithArgumentsAsync(arguments,executeCallback);
+      setState(() {
+        Mp3ConvertPath = convertAudioFile.path;
+      });
       print("Converted file path: ${convertAudioFile.path}");
     } catch (e) {
       print("Error: $e");
@@ -162,7 +232,8 @@ class _DOWNLOADPageState extends State<DOWNLOADPage> {
 
             ElevatedButton(
               onPressed: (){
-                converterAudioFile();
+                // converterAudioFile();
+                 ConverterAudioFile();
               },
               child: Text("convert audio"),
             ),

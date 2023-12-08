@@ -42,13 +42,13 @@ dependencies:
   video_viewer: ^1.2.0
   native_video_view: ^1.0.5
   camera: ^0.10.5+5
-#  ffmpeg_kit_flutter: ^6.0.3
   http: ^0.13.6
   audioplayers: ^5.2.0
   just_audio: ^0.9.35
   file_picker: ^5.2.10
-  flutter_ffmpeg: ^0.4.2
-
+  ffmpeg_kit_flutter: ^5.1.0
+#  flutter_ffmpeg: ^0.4.2
+#
 dev_dependencies:
   flutter_test:
     sdk: flutter
