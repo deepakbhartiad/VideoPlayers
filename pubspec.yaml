@@ -46,7 +46,12 @@ dependencies:
   audioplayers: ^5.2.0
   just_audio: ^0.9.35
   file_picker: ^5.2.10
-  ffmpeg_kit_flutter: ^5.1.0
+  ffmpeg_kit_flutter: ^6.0.3
+  fluttertoast: ^8.2.4
+  flutter_lame: ^1.0.2
+  easy_audio_trimmer: ^1.0.2+4
+  flutter_audio_trimmer: ^0.0.4
+  permission_handler: ^11.1.0
 #  flutter_ffmpeg: ^0.4.2
 #
 dev_dependencies:

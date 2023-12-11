@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sample/pages/welcome_page.dart';
+import 'package:sample/secondadioTrimmer.dart';
 
 import 'allPlayerPage.dart';
 
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.green,
           ),
-          home: AllPlayerPage(),
+          home:MyHomePage(),
+         // AllPlayerPage(),
         ));
   }
 }
